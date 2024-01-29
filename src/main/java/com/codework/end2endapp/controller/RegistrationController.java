@@ -4,6 +4,7 @@ package com.codework.end2endapp.controller;
 import com.codework.end2endapp.entity.User;
 import com.codework.end2endapp.event.RegistrationCompleteEvent;
 import com.codework.end2endapp.registration.RegistrationRequest;
+import com.codework.end2endapp.service.IUserService;
 import com.codework.end2endapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/registration")
 public class RegistrationController {
-    private final UserService userService;
+    private final IUserService userService;
     private final ApplicationEventPublisher publisher;
 
     @GetMapping("/registration-form")

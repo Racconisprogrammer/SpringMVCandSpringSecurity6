@@ -12,5 +12,5 @@ public interface IUserService {
 
     User registerUser(RegistrationRequest registrationRequest);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

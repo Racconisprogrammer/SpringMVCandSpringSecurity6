@@ -1,5 +1,7 @@
 package com.codework.end2endapp.security;
 
+import com.codework.end2endapp.service.CustomUserDetailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,28 +14,30 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class EndToEndSecurityDemo {
+
+    private final CustomUserDetailService customUserDetailService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(8);
     }
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/", "/registration/**")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated())
-                .formLogin(form ->
-                        form.loginPage("/login")
-                                .usernameParameter("email")
-                                .defaultSuccessUrl("/")
+                .authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers("/", "/login", "/registration/**")
                                 .permitAll())
-                .logout(logout->
-                        logout.invalidateHttpSession(true)
-                                .clearAuthentication(true)
+                .formLogin(formLogin ->
+                        formLogin.loginPage("/login")
+                                .usernameParameter("email")
+                                .permitAll())
+                .logout(logout ->
+                        logout.clearAuthentication(true)
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/"))
                 .build();
