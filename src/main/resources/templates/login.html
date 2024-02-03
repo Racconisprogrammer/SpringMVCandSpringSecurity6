@@ -11,7 +11,7 @@
         <div th:if="${param.error}" class="col-sm-8">
             <p class="alert alert-warning">Invalid username or password</p>
         </div>
-        <div th:if="${param.verifed}" class="col-sm-8">
+        <div th:if="${param.verified}" class="col-sm-8">
             <p class="alert alert-warning">This account has already been verified</p>
         </div>
         <div th:if="${param.valid}" class="col-sm-8">
@@ -22,7 +22,7 @@
         </div>
     </div>
         <h2 class="m-4">Your Login Form</h2>
-    <form>
+    <form th:action="@{/login}" method="post" class="px-4">
         <div class="mb-3 row">
             <label for="email" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-6">

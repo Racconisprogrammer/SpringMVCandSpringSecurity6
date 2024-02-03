@@ -28,10 +28,11 @@ public class EndToEndSecurityDemo {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers("/", "/login", "/registration/**")
+                        authorize.requestMatchers("/", "/login", "/error", "/registration/**")
                                 .permitAll())
                 .formLogin(formLogin ->
                         formLogin.loginPage("/login")
+                                .defaultSuccessUrl("/users")
                                 .usernameParameter("email")
                                 .permitAll())
                 .logout(logout ->
