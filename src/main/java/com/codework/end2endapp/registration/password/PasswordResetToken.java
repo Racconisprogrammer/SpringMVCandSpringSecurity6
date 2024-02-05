@@ -1,4 +1,4 @@
-package com.codework.end2endapp.registration.token;
+package com.codework.end2endapp.registration.password;
 
 
 import com.codework.end2endapp.entity.User;
@@ -13,9 +13,9 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
-public class VerificationToken {
+@NoArgsConstructor
+public class PasswordResetToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,9 @@ public class VerificationToken {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public VerificationToken(String token, User user) {
+    public PasswordResetToken(String token, User user) {
         this.token = token;
         this.user = user;
         this.expirationTime = TokenExpirationTime.getExpirationTime();
     }
-
 }

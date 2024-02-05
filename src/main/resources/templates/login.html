@@ -1,53 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head th:replace="fragments :: boots_trap">
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Login</title>
+    <title>User Login</title>
 </head>
 <body>
 <div class="container col-md-offset-3 col-md-8 mt-lg-5">
-    <div class="row mt-2">
+    <div th:replace="fragments :: nav_bar"></div>
+
+    <div class="row mt-4">
         <div th:if="${param.error}" class="col-sm-8">
-            <p class="alert alert-warning">Invalid username or password</p>
+            <p class="alert alert-danger alert-dismissible fade show" role="alert">Invalid username or password</p>
         </div>
+
+        <div th:if="${param.reset_success}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible fade show" role="alert">You have successfully reset your password, please log in here.</p>
+        </div>
+
         <div th:if="${param.verified}" class="col-sm-8">
-            <p class="alert alert-warning">This account has already been verified</p>
+            <p class="alert alert-info alert-dismissible fade show" role="alert">This account has already been verified,  please log in here.</p>
         </div>
         <div th:if="${param.valid}" class="col-sm-8">
-            <p class="alert alert-warning">Email verified successfully, please log in here.</p>
+            <p class="alert alert-info alert-dismissible">Email verified successfully, please log in here.</p>
         </div>
+
         <div th:if="${param.logout}" class="col-sm-8">
             <p class="alert alert-warning">You have been logged out.</p>
         </div>
     </div>
-        <h2 class="m-4">Your Login Form</h2>
+
     <form th:action="@{/login}" method="post" class="px-4">
+        <h2 class="mb-4">User Login Form </h2>
         <div class="mb-3 row">
             <label for="email" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-6">
-                <input type="text" id="email" autofocus="autofocus"
-                       class="form-control" required name="email">
+                <input type="text" class="form-control" id="email" name="email"
+                       required autofocus="autofocus">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="password" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-6">
-                <input type="password" id="password" autofocus="autofocus"
-                       class="form-control" required name="password">
+                <input type="password" class="form-control" name="password" id="password" required
+                       autofocus="autofocus">
             </div>
         </div>
-        <div>
-            <button type="submit" class="btn btn-success">Login</button>
-            <span>Registered already? <a href="#" th:href="@{registration/registration-form}">
-                Register here.
-            </a></span>
+
+        <div class="mb-3">
+            <button type="submit" name="login" id="login" class="btn btn-success"> Login</button>
+            <span> Not registered yet? <a href="#" th:href="@{/registration/registration-form}">Register.</a> </span>
+            <div class="vr"></div>
+            <span><a href="/" th:href="@{registration/forgot-password-request}">Forgot password.</a> </span>
         </div>
     </form>
-
 </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>

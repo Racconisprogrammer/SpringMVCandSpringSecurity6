@@ -1,4 +1,4 @@
-package com.codework.end2endapp.registration.token;
+package com.codework.end2endapp.utility;
 
 
 import java.util.Calendar;
